@@ -1,0 +1,6 @@
+{:dev?        true
+
+ :http/server {:config {:dev?    #ref [:dev?]
+                        :ip      "0.0.0.0"
+                        :port    3008
+                        :timeout 600000}}}

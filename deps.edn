@@ -1,0 +1,34 @@
+{:paths   ["src/common"]
+ :deps    {aero/aero                {:mvn/version "1.1.6"}
+           com.taoensso/sente       {:mvn/version "1.17.0"}
+           integrant/integrant      {:mvn/version "0.8.0"}
+           integrant/repl           {:mvn/version "0.3.2"}
+           nrepl/nrepl              {:mvn/version "1.0.0"}
+           org.clojure/clojure      {:mvn/version "1.11.1"}
+           org.clojure/core.async   {:mvn/version "1.6.673"}
+           org.clojure/core.memoize {:mvn/version "1.0.257"}}
+ :aliases {:nrepl  {:main-opts ["-m" "nrepl.cmdline"]}
+           :dev    {:extra-deps  {org.clojure/tools.namespace {:mvn/version "1.4.2"}}
+                    :extra-paths ["env/dev/resources" "src/dev"]
+                    :jvm-opts    ["-Dclojure.core.async.go-checking=true"
+                                  "-Dclojure.spec.check-asserts=true"
+                                  "-Dtrace"
+                                  "-XX:-OmitStackTraceInFastThrow"]}
+           :server {:extra-paths ["src/server"]
+                    :extra-deps  {http-kit/http-kit   {:mvn/version "2.6.0"}
+                                  metosin/reitit      {:mvn/version "0.7.0-alpha3"}
+                                  ring-cors/ring-cors {:mvn/version "0.1.13"}
+                                  ring/ring-defaults  {:mvn/version "0.3.4"}}}
+           :cljs   {:extra-paths ["src/web"]
+                    :extra-deps  {applied-science/js-interop {:mvn/version "0.3.3"}
+                                  cljs-http/cljs-http        {:mvn/version "0.1.46"}
+                                  funcool/promesa            {:mvn/version "10.0.594"}
+                                  lilactown/helix            {:mvn/version "0.1.10"}
+                                  org.clojure/clojurescript  {:mvn/version "1.11.60" :scope "provided"}}}
+           :shadow {:extra-deps {thheller/shadow-cljs {:mvn/version "2.24.0"}
+                                 binaryage/devtools   {:mvn/version "1.0.6"}}}
+           :lint   {:extra-deps {clj-kondo/clj-kondo {:mvn/version "RELEASE"}}
+                    :main-opts  ["-m" "clj-kondo.main" "--lint" "src" "test"]}
+           :build  {:deps       {org.clojure/tools.build {:mvn/version "0.9.2"}}
+                    :ns-default build
+                    :jvm-opts   ["-Dclojure.spec.compile-asserts=false"]}}}

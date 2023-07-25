@@ -1,4 +1,4 @@
-(ns snakelake.server.model
+(ns snakelake.model
   (:require
     [clojure.core.memoize :as memo]
     [clojure.set :as set]))
