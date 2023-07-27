@@ -2,15 +2,16 @@
   (:require
     [snakelake.ainit]
     [snakelake.model :as model]
-    [snakelake.config :as config]
     [taoensso.sente :as sente]))
 
 (defn get-chsk-url
   "Connect to a configured server instead of the page host"
   [protocol chsk-host chsk-path type]
   (let [protocol (case type :ajax protocol
-                            :ws   (if (= protocol "https:") "wss:" "ws:"))]
-    (str protocol "//" config/server chsk-path)))
+                            :ws (if (= protocol "https:") "wss:" "ws:"))]
+    ; FIXME
+    (println "chsk-host =" chsk-host)
+    (str protocol "//" "127.0.0.1:3008" chsk-path)))
 
 (defonce channel-socket
   (with-redefs [sente/get-chsk-url get-chsk-url]

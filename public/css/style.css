@@ -1,11 +1,16 @@
 body {
   background-color: #7CAFC2;
-  font-family: courier;
+  font-family: Candara;
 }
 
 button, input {
-  font-family: courier;
+  font-family: Candara;
   text-align: center;
+}
+
+.audio, audio{
+  margin: 0 auto;
+  display: table;
 }
 
 .board {

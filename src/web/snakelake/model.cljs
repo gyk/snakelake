@@ -1,6 +1,4 @@
-(ns snakelake.model
-  (:require
-    [reagent.core :as reagent]))
+(ns snakelake.model)
 
 (def dictionary
   ["Slimy" "Slippery" "Slithering" "Serpentine" "Sassy" "Slick" "Sick" "Sophisticated"
@@ -10,7 +8,7 @@
    "Sente" "Dragon" "Clojure" "Nomnom"])
 
 (defonce app-state
-  (reagent/atom
+  (atom
     {:username (str (rand-nth dictionary) " " (rand-nth dictionary))}))
 
 (defn world! [world]
