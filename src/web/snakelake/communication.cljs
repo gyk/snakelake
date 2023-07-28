@@ -4,18 +4,17 @@
     [snakelake.model :as model]
     [taoensso.sente :as sente]))
 
-(defn get-chsk-url
-  "Connect to a configured server instead of the page host"
-  [protocol chsk-host chsk-path type]
-  (let [protocol (case type :ajax protocol
-                            :ws (if (= protocol "https:") "wss:" "ws:"))]
-    ; FIXME
-    (println "chsk-host =" chsk-host)
-    (str protocol "//" "127.0.0.1:3008" chsk-path)))
+(def ?csrf-token
+  (when-let [el (.getElementById js/document "sente-csrf-token")]
+    (.getAttribute el "data-csrf-token")))
 
 (defonce channel-socket
-  (with-redefs [sente/get-chsk-url get-chsk-url]
-    (sente/make-channel-socket! "/chsk" {:type :auto})))
+  (sente/make-channel-socket!
+    "/chsk"
+    ?csrf-token
+    {:type :auto
+     :port 3008}))
+
 (defonce chsk (:chsk channel-socket))
 (defonce ch-chsk (:ch-recv channel-socket))
 (defonce chsk-send! (:send-fn channel-socket))

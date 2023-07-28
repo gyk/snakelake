@@ -20,9 +20,7 @@
   (defonce channel-socket
     (sente/make-channel-socket!
       (get-sch-adapter)
-      ; FIXME
-      {:csrf-token-fn nil
-       :user-id-fn    #'model/next-uid})))
+      {:user-id-fn #'model/next-uid})))
 
 (defn- wrap-cors
   [handler]
@@ -71,6 +69,7 @@
         }
        :data
        {:middleware [:cors
+                     :anti-forgery
                      :session
                      :params/wrap-keyword
                      :params/wrap
@@ -119,7 +118,7 @@
 
 (defn ticker []
   (while true
-    (Thread/sleep 500)
+    (Thread/sleep 250)
     (try
       (model/tick)
       (broadcast)
@@ -144,9 +143,7 @@
   (println "HTTP server is starting")
   (let [system {::config config}
         app    (-> (make-handler config)
-                   (defaults/wrap-defaults (assoc-in defaults/site-defaults
-                                                     [:security :anti-forgery]
-                                                     false))
+                   (defaults/wrap-defaults defaults/site-defaults)
                    (wrap-system system))
         _      (start-websocket)
         router (start-router)
